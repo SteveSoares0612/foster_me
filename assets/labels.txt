@@ -1,0 +1,27 @@
+0 Affenpinscher
+1 Afghan Hound
+2 American Bulldog
+3 Beagle
+4 Belgian Malinois
+5 Bernese Mountain Dog
+6 Bloodhound
+7 Boxer
+8 Cavalier King Charles Spaniel
+9 Chihuahua
+10 Cocker Spaniel
+11 Corgi (Welsh)
+12 Dachshund
+13 Dalmatian
+14 Doberman Pinscher
+15 German Shepherd
+16 Golden Retriever
+17 Great Dane
+18 Labrador Retriever
+19 Pomeranian
+20 Poodle
+21 Pug
+22 Rottweiler
+23 Saint Bernard
+24 Siberian Husky
+25 Yorkshire Terrier
+26 American Water Spaniel -
