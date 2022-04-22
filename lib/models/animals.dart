@@ -38,8 +38,6 @@ class Animals with ChangeNotifier {
   }
 
   Future<void> fetchAndSetAnimals() async {
-    log(authToken, name: "Auth Token");
-    log(chosenCategory, name: "Chosen Category");
     final url =
         'https://fosterme-7-default-rtdb.firebaseio.com/Animals.json?auth=$authToken&orderBy="category"&equalTo="$chosenCategory"';
     try {

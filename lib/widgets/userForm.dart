@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'adminForm.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +26,7 @@ class _UserFormState extends State<UserForm> {
   TextEditingController _Country = new TextEditingController();
   TextEditingController _phoneNoHome = new TextEditingController();
   TextEditingController _phoneNoWork = new TextEditingController();
+  TextEditingController householdPeoplelist = new TextEditingController();
   String selectedHouseType;
   List<String> houseType = [
     'Townhouse',
@@ -44,7 +48,6 @@ class _UserFormState extends State<UserForm> {
     'Moderate',
     'Quite with occasional guests',
   ];
-  String householdPeoplelist;
   String allergies;
   String agreeForfoster;
   String selectedGender;
@@ -98,62 +101,94 @@ class _UserFormState extends State<UserForm> {
   );
 
   Future<void> updateNUser() async {
-    String extension;
-    if (_pickedImage.toString().contains('.jpg')) {
-      extension = '.jpg';
-    } else if (_pickedImage.toString().contains('.png')) {
-      extension = '.png';
-    } else {
-      Flushbar(
-        backgroundColor: Theme.of(context).primaryColor,
-        message: 'Please pick an image (png or jpg)',
-        duration: Duration(seconds: 2),
-      ).show(context);
-      return;
-    }
-    if (_pickedImage == null) {
-      Flushbar(
-        backgroundColor: Theme.of(context).primaryColor,
-        message: 'Please Pick An Image',
-        duration: Duration(seconds: 2),
-      ).show(context);
-      return;
-    }
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child("user_images")
-        .child(userId + extension);
-    UploadTask uploadTask = ref.putFile(_pickedImage);
-    final imageURL = await ref.getDownloadURL();
+    try {
+      String extension;
+      if (_pickedImage.toString().contains('.jpg')) {
+        extension = '.jpg';
+      } else if (_pickedImage.toString().contains('.png')) {
+        extension = '.png';
+      } else {
+        Flushbar(
+          backgroundColor: Theme.of(context).primaryColor,
+          message: 'Please pick an image (png or jpg)',
+          duration: Duration(seconds: 2),
+        ).show(context);
+        return;
+      }
+      if (_pickedImage == null) {
+        Flushbar(
+          backgroundColor: Theme.of(context).primaryColor,
+          message: 'Please Pick An Image',
+          duration: Duration(seconds: 2),
+        ).show(context);
+        return;
+      }
+      // if ((_fullname.text == '' || null) ||
+      //     (_Country.text == '' || null) ||
+      //     (_City.text == '' || null) ||
+      //     (_Address.text == '' || null) ||
+      //     (_phoneNoHome.text == '' || null) ||
+      //     (_Age.text == '' || null) ||
+      //     (agreeForfoster == null) ||
+      //     (allergies == null) ||
+      //     (driver == null) ||
+      //     (householdPeoplelist.text == '' || null) ||
+      //     (noOffamilyMembers.text == '' || null) ||
+      //     (selectedGender == '' || null) ||
+      //     (selectedHouseOcc == '' || null) ||
+      //     (selectedHouseType == '' || null) ||
+      //     (selectedSize == '' || null) ||
+      //     (selectedactivityLevel == '' || null) ||
+      //     (willingToTrain == '' || null) ||
+      //     (willingTotakeToVet == '' || null) ||
+      //     (hasKids == '' || null)) {
+      //   Flushbar(
+      //     backgroundColor: Theme.of(context).primaryColor,
+      //     message: 'Please Enter All Textfields',
+      //     duration: Duration(seconds: 2),
+      //   ).show(context);
+      //   return;
+      // }
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child("user_images")
+          .child(userId + extension);
+      UploadTask uploadTask = ref.putFile(_pickedImage);
+      final imageURL = await ref.getDownloadURL();
 
-    _editedUser = User(
-      formFilled: true,
-      fullName: _fullname.text,
-      Country: _Country.text,
-      City: _City.text,
-      Address: _Address.text,
-      phoneNo: _phoneNoHome.text,
-      age: _Age.text,
-      agreeForfoster: agreeForfoster,
-      allergies: allergies,
-      driver: driver,
-      householdPeoplelist: householdPeoplelist,
-      noOffamilyMembers: noOffamilyMembers.text,
-      phoneNoWrk: _phoneNoWork.text,
-      selectedGender: selectedGender,
-      selectedHouseOcc: selectedHouseOcc,
-      selectedHouseType: selectedHouseType,
-      selectedSize: selectedSize,
-      selectedactivityLevel: selectedactivityLevel,
-      willingToTrain: willingToTrain,
-      willingTotakeToVet: willingTotakeToVet,
-      hasKids: hasKids,
-      profileImage: imageURL,
-    );
-    // Provider.of<Auth>(context, listen: false)
-    //     .updateUser(userId, _editedUser)
-    //     .then((value) => Provider.of<Auth>(context, listen: false)
-    //         .fetchAndSetLoggedInUser());
+      _editedUser = User(
+        formFilled: true,
+        fullName: _fullname.text,
+        Country: _Country.text,
+        City: _City.text,
+        Address: _Address.text,
+        phoneNo: _phoneNoHome.text,
+        age: _Age.text,
+        agreeForfoster: agreeForfoster,
+        allergies: allergies,
+        driver: driver,
+        householdPeoplelist: householdPeoplelist.text,
+        noOffamilyMembers: noOffamilyMembers.text,
+        phoneNoWrk: _phoneNoWork.text,
+        selectedGender: selectedGender,
+        selectedHouseOcc: selectedHouseOcc,
+        selectedHouseType: selectedHouseType,
+        selectedSize: selectedSize,
+        selectedactivityLevel: selectedactivityLevel,
+        willingToTrain: willingToTrain,
+        willingTotakeToVet: willingTotakeToVet,
+        hasKids: hasKids,
+        // profileImage: "Test",
+        profileImage: imageURL,
+      );
+      Provider.of<Auth>(context, listen: false)
+          .updateUser(userId, _editedUser)
+          .then((value) => Provider.of<Auth>(context, listen: false)
+              .fetchAndSetLoggedInUser()
+              .then((value) => Navigator.of(context).pop()));
+    } catch (e) {
+      print("Error " + e);
+    }
   }
 
   Widget _buildStringText(BuildContext context, String Title, String hintText,
@@ -324,7 +359,7 @@ class _UserFormState extends State<UserForm> {
                 context,
                 "Please list all the people living in your house (Include Name, relationship, gender and age) *",
                 "ex: Jennifer - Wife - 29 - Female",
-                _phoneNoWork),
+                householdPeoplelist),
             Column(
               children: [
                 Row(
@@ -915,9 +950,7 @@ class _UserFormState extends State<UserForm> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Theme.of(context).primaryColor),
-                    onPressed: () {
-                      updateNUser().then((value) => Navigator.pop(context));
-                    },
+                    onPressed: () => updateNUser(),
                     child: const Text(
                       'SUBMIT',
                       style: TextStyle(fontSize: 15),

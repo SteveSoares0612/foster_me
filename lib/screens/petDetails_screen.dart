@@ -225,7 +225,8 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
 
     await Provider.of<Auth>(context, listen: false)
         .addApplication(_UserApplication)
-        .then((value) => showApplicationSuccess(context));
+        .then((value) => showApplicationSuccess(context))
+        .then((value) => Navigator.pop(context));
   }
 
   showFailureDialog(BuildContext context) {
@@ -259,12 +260,11 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
   }
 
   showApplicationDialog(
-      BuildContext context, List<User> user, Animal selectedAnimal) {
+      BuildContext ctx, List<User> user, Animal selectedAnimal) {
     Widget ApplyButton = ElevatedButton(
       style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
       onPressed: () {
-        applyToFoster(user, selectedAnimal, context)
-            .then((value) => Navigator.pop(context));
+        applyToFoster(user, selectedAnimal, ctx);
       },
       child: Text(
         "Apply",

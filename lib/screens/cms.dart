@@ -14,6 +14,8 @@ import 'package:another_flushbar/flushbar.dart';
 import 'dart:io';
 
 class CMS extends StatefulWidget {
+  final Function menuCallback;
+  CMS({@required this.menuCallback});
   static const routeName = '/cms';
 
   @override

@@ -26,6 +26,7 @@ class Auth with ChangeNotifier {
   bool formFilled;
   List<User> users = [];
   List<User> allusers = [];
+  String adminKey = "abcdefg";
 
   bool get auth {
     return _token != null;
@@ -38,6 +39,10 @@ class Auth with ChangeNotifier {
       return _token;
     }
     return null;
+  }
+
+  List<User> get Users {
+    return [...users];
   }
 
   bool get admin {
@@ -87,11 +92,18 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> signUpUser(String email, String password) async {
+  Future<void> signUpUser(
+      String email, String password, String userAdminKey) async {
+    bool makeAdmin;
+    if (userAdminKey == adminKey) {
+      makeAdmin = true;
+    } else {
+      makeAdmin = false;
+    }
     return _authenticate(email, password, 'signUp').then((value) {
       loggedInUser = _userId;
     }).then(
-      (value) => addUser(email, password).then(
+      (value) => addUser(email, password, makeAdmin).then(
         (value) => fetchAndSetLoggedInUser().then(
           (value) => getAllUsers(),
         ),
@@ -153,6 +165,7 @@ class Auth with ChangeNotifier {
       users = loadedUsers;
       isAdmin = users[0].isAdmin;
       formFilled = users[0].formFilled;
+      print("Users Array length " + "${users.length}");
       notifyListeners();
     } catch (error) {
       // print("This error : " + error);
@@ -213,6 +226,7 @@ class Auth with ChangeNotifier {
   Future<void> addUser(
     String email,
     String password,
+    bool makeAdmin,
   ) async {
     try {
       final url = Uri.parse(
@@ -223,7 +237,7 @@ class Auth with ChangeNotifier {
         body: json.encode({
           'UserId': _userId,
           'Email': email,
-          'isAdmin': false,
+          'isAdmin': makeAdmin,
           'formFilled': false,
           'fullName': '',
           'phoneNo': '',
@@ -259,8 +273,26 @@ class Auth with ChangeNotifier {
 
   Future<void> updateUser(String id, User newUser) async {
     // final userIndex = users.indexWhere((user) => user.UserID == id);
-    print("Id =  ${id}");
-    print("Id =  ${users[0].UserID}");
+    print(newUser.fullName);
+    print(newUser.phoneNo);
+    print(newUser.phoneNo);
+    print(newUser.Country);
+    print(newUser.Address);
+    print(newUser.age);
+    print(newUser.agreeForfoster);
+    print(newUser.allergies);
+    print(newUser.driver);
+    print(newUser.householdPeoplelist);
+    print(newUser.noOffamilyMembers);
+    print(newUser.phoneNoWrk);
+    print(newUser.selectedGender);
+    print(newUser.selectedHouseOcc);
+    print(newUser.selectedHouseType);
+    print(newUser.selectedSize);
+    print(newUser.selectedactivityLevel);
+    print(newUser.willingToTrain);
+    print(newUser.willingTotakeToVet);
+    print(newUser.hasKids);
     final url = Uri.parse(
         'https://fosterme-7-default-rtdb.firebaseio.com/Users/$id.json?');
     print(newUser.fullName);
@@ -270,7 +302,7 @@ class Auth with ChangeNotifier {
         {
           'fullName': newUser.fullName,
           'phoneNo': newUser.phoneNo,
-          'city': newUser.City,
+          'city': newUser.phoneNo,
           'Country': newUser.Country,
           'address': newUser.Address,
           'formFilled': true,
@@ -320,19 +352,7 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logout() async {
-    _token = null;
-    _userId = null;
-    _expiryDate = null;
-    if (_authTimer != null) {
-      _authTimer.cancel();
-      _authTimer = null;
-    }
-    notifyListeners();
-  }
-
   Future<void> addApplication(FApplication application) async {
-    print("HELLLLLLLLLLLLLLLLLLLLLO");
     final url =
         'https://fosterme-7-default-rtdb.firebaseio.com/Applications.json?';
     http
@@ -375,5 +395,16 @@ class Auth with ChangeNotifier {
     final response = await http.get(Uri.parse(url));
     final extractedData = json.decode(response.body);
     print(extractedData);
+  }
+
+  Future<void> logout() async {
+    _token = null;
+    _userId = null;
+    _expiryDate = null;
+    if (_authTimer != null) {
+      _authTimer.cancel();
+      _authTimer = null;
+    }
+    notifyListeners();
   }
 }

@@ -19,7 +19,9 @@ class _LoginState extends State<Login> {
   var _isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey();
   final _passwordController = TextEditingController();
+  TextEditingController _adminKey = new TextEditingController();
   AuthMode _authMode = AuthMode.Login;
+
   Map<String, String> _authData = {
     'email': '',
     'password': '',
@@ -43,6 +45,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _submit() async {
+    String adminKEY = _adminKey.text;
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -60,10 +63,12 @@ class _LoginState extends State<Login> {
         await Provider.of<Auth>(context, listen: false).signUpUser(
           _authData['email'],
           _authData['password'],
+          adminKEY,
         );
       }
     } on HTTPException catch (error) {
       var message = "Authentication failed";
+
       if (error.toString().contains("EMAIL_EXISTS")) {
         message = "Email is already in use.";
       } else if (error.toString().contains("INVALID_EMAIL")) {
@@ -78,7 +83,7 @@ class _LoginState extends State<Login> {
       _showErrorDialog(message);
     } catch (error) {
       var message = "Could not authenticate. Please try again later.";
-      _showErrorDialog(message);
+      _showErrorDialog(error);
     }
 
     setState(() {
@@ -121,7 +126,7 @@ class _LoginState extends State<Login> {
             ),
             Container(
               width: 300,
-              height: _authMode == AuthMode.Login ? 470 : 500,
+              height: _authMode == AuthMode.Login ? 470 : 630,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Column(
@@ -186,7 +191,6 @@ class _LoginState extends State<Login> {
                                   if (value.isEmpty || !value.contains('@')) {
                                     return 'Invalid Email';
                                   }
-                                  return null;
                                   return null;
                                 }
                               },
@@ -254,6 +258,34 @@ class _LoginState extends State<Login> {
                                 }
                               }
                             : null,
+                      ),
+                    ),
+                  if (_authMode == AuthMode.Signup)
+                    TextButton(
+                      onPressed: null,
+                      child: Text(
+                        "Are you an admin?",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900, fontSize: 12),
+                      ),
+                    ),
+                  if (_authMode == AuthMode.Signup)
+                    Container(
+                      width: 270,
+                      height: 70,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          suffixIcon: Icon(
+                            FontAwesomeIcons.envelope,
+                            size: 15,
+                          ),
+                          labelText: "Enter admin Key",
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(width: 1.0),
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                        ),
+                        controller: _adminKey,
                       ),
                     ),
                   if (_isLoading)

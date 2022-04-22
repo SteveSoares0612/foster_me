@@ -57,26 +57,29 @@ class _petViewState extends State<petView> {
                     );
                   } else {
                     return Consumer<Animals>(builder: (ctx, animalsData, _) {
-                      print(animalsData.animals[0].name);
-                      return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: animalsData.animals.length,
-                        itemBuilder: (_, index) => Column(
-                          children: [
-                            Animal_item(
-                              animalsData.animals[index].id,
-                              animalsData.animals[index].name,
-                              animalsData.animals[index].animal_Breed,
-                              animalsData.animals[index].Image,
-                              animalsData.animals[index].isMale,
-                              animalsData.animals[index].age,
-                            ),
-                            SizedBox(
-                              height: 30,
-                            )
-                          ],
-                        ),
-                      );
+                      if (animalsData.animals.length == 0) {
+                        return Text("No Data Found");
+                      } else {
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: animalsData.animals.length,
+                          itemBuilder: (_, index) => Column(
+                            children: [
+                              Animal_item(
+                                animalsData.animals[index].id,
+                                animalsData.animals[index].name,
+                                animalsData.animals[index].animal_Breed,
+                                animalsData.animals[index].Image,
+                                animalsData.animals[index].isMale,
+                                animalsData.animals[index].age,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              )
+                            ],
+                          ),
+                        );
+                      }
                     });
                   }
                 });

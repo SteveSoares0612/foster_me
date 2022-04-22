@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foster_me/screens/profile_screen.dart';
 import './models/animals.dart';
 import './models/authentication.dart';
 import './screens/cms.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Color.fromRGBO(27, 124, 16, 1),
             //Color.fromRGBO(255, 211, 211, 1),
           ),
-          home: authData.auth ? MenuFrame() : Login(),
+          home: authData.auth ? MenuFrame(authData.isAdmin) : Login(),
           routes: {
             // // '/': (ctx) => Main_Foster(),
             // '/': (ctx) => Login(),
@@ -58,7 +59,8 @@ class MyApp extends StatelessWidget {
             Login.routeName: (ctx) => Login(),
             Signup.routeName: (ctx) => Signup(),
             CMS.routeName: (ctx) => CMS(),
-            DetermineBreed.routeName: (ctx) => DetermineBreed()
+            DetermineBreed.routeName: (ctx) => DetermineBreed(),
+            ProfileScreen.routeName: (ctx) => ProfileScreen(),
           },
         ),
       ),

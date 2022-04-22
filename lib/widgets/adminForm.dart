@@ -53,6 +53,7 @@ class _adminFormState extends State<adminForm> {
   }
 
   Future<void> updateAdminUser() async {
+    print("helloooo");
     String extension;
     if (_pickedImage.toString().contains('.jpg')) {
       extension = '.jpg';
@@ -74,19 +75,19 @@ class _adminFormState extends State<adminForm> {
       ).show(context);
       return;
     }
-    if ((_fullname.text == '' || null) ||
-        (_Country.text == '' || null) ||
-        (_City.text == '' || null) ||
-        (_location.text == '' || null) ||
-        (_phoneNo.text == '' || null) ||
-        (_description.text == '' || null)) {
-      Flushbar(
-        backgroundColor: Theme.of(context).primaryColor,
-        message: 'Please Enter All Textfields',
-        duration: Duration(seconds: 2),
-      ).show(context);
-      return;
-    }
+    // if ((_fullname.text == '' || null) ||
+    //     (_Country.text == '' || null) ||
+    //     (_City.text == '' || null) ||
+    //     (_location.text == '' || null) ||
+    //     (_phoneNo.text == '' || null) ||
+    //     (_description.text == '' || null)) {
+    //   Flushbar(
+    //     backgroundColor: Theme.of(context).primaryColor,
+    //     message: 'Please Enter All Textfields',
+    //     duration: Duration(seconds: 2),
+    //   ).show(context);
+    //   return;
+    // }
     final ref = FirebaseStorage.instance
         .ref()
         .child("user_images")
@@ -107,8 +108,9 @@ class _adminFormState extends State<adminForm> {
 
     Provider.of<Auth>(context, listen: false)
         .updateAdminUser(userId, _editedAdminUser)
-        .then((value) => Provider.of<Auth>(context, listen: false)
-            .fetchAndSetLoggedInUser());
+        .then((value) =>
+            Provider.of<Auth>(context, listen: false).fetchAndSetLoggedInUser())
+        .then((value) => Navigator.of(context).pop());
   }
 
   Widget _buildStringText(BuildContext context, String Title, String hintText,
@@ -181,9 +183,7 @@ class _adminFormState extends State<adminForm> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Theme.of(context).primaryColor),
-                    onPressed: () {
-                      updateAdminUser();
-                    },
+                    onPressed: () => updateAdminUser(),
                     child: const Text(
                       'SUBMIT',
                       style: TextStyle(fontSize: 15),
