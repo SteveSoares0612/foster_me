@@ -58,7 +58,28 @@ class _petViewState extends State<petView> {
                   } else {
                     return Consumer<Animals>(builder: (ctx, animalsData, _) {
                       if (animalsData.animals.length == 0) {
-                        return Text("No Data Found");
+                        return Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                width: 300,
+                                height: 300,
+                                child: FittedBox(
+                                  child:
+                                      Image.asset('assets/Images/noData.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Text(
+                                "Oops.. Seems like there are no animals under this category",
+                                textAlign: TextAlign.center,
+                              )
+                            ],
+                          ),
+                        );
                       } else {
                         return ListView.builder(
                           scrollDirection: Axis.vertical,

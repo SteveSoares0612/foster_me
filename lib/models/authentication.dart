@@ -321,6 +321,7 @@ class Auth with ChangeNotifier {
           'willingToTrain': newUser.willingToTrain,
           'willingTotakeToVet': newUser.willingTotakeToVet,
           'hasKids': newUser.hasKids,
+          'profileImage': newUser.profileImage,
         },
       ),
     );

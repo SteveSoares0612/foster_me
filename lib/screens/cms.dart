@@ -214,21 +214,18 @@ class _CMSState extends State<CMS> {
   Widget build(BuildContext context) {
     // userID = Provider.of<Auth>(context, listen: false).loggedInUser;
     return DefaultTabController(
-      length: 2,
+      length: 1,
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("FOSTER ME")],
-            ),
+            title: Text("FosterMe"),
             backgroundColor: Theme.of(context).primaryColor,
             bottom: TabBar(
               indicatorColor: Colors.white,
               tabs: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Add Pet",
@@ -237,17 +234,17 @@ class _CMSState extends State<CMS> {
                     Tab(icon: Icon(Icons.add, color: Colors.white)),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text("Update Pet", style: TextStyle(color: Colors.white)),
-                    Tab(
-                        icon: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                    )),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     Text("Update Pet", style: TextStyle(color: Colors.white)),
+                //     Tab(
+                //         icon: Icon(
+                //       Icons.edit,
+                //       color: Colors.white,
+                //     )),
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -267,8 +264,9 @@ class _CMSState extends State<CMS> {
                             ImageInput(_useImage),
                             buildTexts(
                                 "Enter Pet Name", FontAwesomeIcons.paw, name),
-                            buildTexts("Enter Pet Breed",
-                                FontAwesomeIcons.question, breed),
+                            SizedBox(
+                              height: 1,
+                            ),
                             Container(
                               width: 350,
                               decoration: BoxDecoration(
@@ -303,6 +301,8 @@ class _CMSState extends State<CMS> {
                             SizedBox(
                               height: 6,
                             ),
+                            buildTexts("Enter Pet Breed",
+                                FontAwesomeIcons.question, breed),
                             buildTexts("Enter Scientific Name",
                                 FontAwesomeIcons.paw, Sname),
                             buildTexts("Enter Pet Age",
@@ -658,13 +658,13 @@ class _CMSState extends State<CMS> {
                         ),
                       ),
                     ),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          // buildTexts("Name", FontAwesomeIcons.paw),
-                        ],
-                      ),
-                    )
+                    // SingleChildScrollView(
+                    //   child: Column(
+                    //     children: [
+                    //       // buildTexts("Name", FontAwesomeIcons.paw),
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
               )

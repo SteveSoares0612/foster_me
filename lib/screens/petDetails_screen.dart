@@ -447,7 +447,12 @@ class _PetDetailsScreenState extends State<PetDetailsScreen> {
                                       top: 15, bottom: 15, right: 10.0),
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary: Colors.white, elevation: 0),
+                                        side: BorderSide(
+                                            width: 2,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        primary: Colors.white,
+                                        elevation: 0),
                                     onPressed: () {
                                       checkEligibility(
                                           userDetails, selectedAnimal);

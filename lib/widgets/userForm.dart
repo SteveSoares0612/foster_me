@@ -240,9 +240,7 @@ class _UserFormState extends State<UserForm> {
           children: [
             ImageInput(_useImage),
             _buildStringText(
-                context, "Enter Your First Name *", "ex: John", _Firstname),
-            _buildStringText(
-                context, "Enter Your Second Name *", "ex: Nicholas", _Lastname),
+                context, "Full Name", "ex: John Nicholas", _fullname),
             _buildStringText(context, "Enter Your Age", "ex: 27", _Age),
             _buildStringText(
                 context, "Enter Your Email *", "ex: someone@gmail.com", _email),
@@ -939,8 +937,6 @@ class _UserFormState extends State<UserForm> {
                 "How many hours in a day would the foster be left alone?",
                 "ex: 8",
                 leftAlone),
-            _buildStringText(
-                context, "Full Name", "ex: John Nicholas", _fullname),
             SizedBox(
               height: 30,
             ),

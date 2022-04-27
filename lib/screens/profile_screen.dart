@@ -15,6 +15,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("My Profile"),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: Consumer<Auth>(
         builder: (ctx, userData, _) {
           if (userData.Users.length == 0) {

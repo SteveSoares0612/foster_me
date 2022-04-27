@@ -157,7 +157,7 @@ class _profileWidgetState extends State<profileWidget> {
                 SizedBox(
                   height: 5,
                 ),
-                buildTitle("Phone Number (Work)"),
+                buildTitle("Number of Family Members"),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 5, left: 15.0, bottom: 15, right: 15),

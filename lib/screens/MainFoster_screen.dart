@@ -56,34 +56,55 @@ class _Main_FosterState extends State<Main_Foster> {
     // categoryID = ModalRoute.of(context)!.settings.arguments as String;
     return Padding(
       padding: const EdgeInsets.only(
-        top: 40.0,
+        top: 0.0,
       ),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 22.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  child: Tab(
-                    icon: Icon(Icons.menu),
+          AppBar(
+            centerTitle: true,
+            title: Image.asset('assets/Images/logo.png', height: 120),
+            backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+            elevation: 0,
+            toolbarHeight: 80,
+            leading: IconButton(
+              onPressed: () {},
+              icon: InkWell(
+                child: Tab(
+                  icon: Icon(
+                    Icons.menu,
+                    color: Theme.of(context).primaryColor,
                   ),
-                  onTap: widget.menuCallback,
                 ),
-                IconButton(
-                  onPressed: () => openBreedDetector(context),
-                  icon: const Icon(FontAwesomeIcons.paw),
-                  color: Theme.of(context).primaryColor,
-                )
-              ],
+                onTap: widget.menuCallback,
+              ),
             ),
           ),
+
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 22.0),
+          //   child: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       InkWell(
+          //         child: Tab(
+          //           icon: Icon(Icons.menu),
+          //         ),
+          //         onTap: widget.menuCallback,
+          //       ),
+          //       Image.asset('assets/Images/logo.png', height: 100),
+          //       IconButton(
+          //         onPressed: () => openBreedDetector(context),
+          //         icon: const Icon(FontAwesomeIcons.paw),
+          //         color: Theme.of(context).primaryColor,
+          //       )
+          //     ],
+          //   ),
+          // ),
           Expanded(
             //main background Widget
             child: Padding(
-              padding: const EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 0.0),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),

@@ -122,18 +122,24 @@ class _LoginState extends State<Login> {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 150,
+              height: _authMode == AuthMode.Login ? 150 : 70,
             ),
             Container(
               width: 300,
-              height: _authMode == AuthMode.Login ? 470 : 630,
+              height: _authMode == AuthMode.Login ? 600 : 760,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 30,
+                  Container(
+                    width: 200,
+                    height: 150,
+                    // color: Colors.red,
+                    child: FittedBox(
+                      child: Image.asset('assets/Images/logo.png'),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   _authMode == AuthMode.Login
                       ? Text(
@@ -199,6 +205,9 @@ class _LoginState extends State<Login> {
                               },
                             ),
                           ),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Container(
                             width: 270,
                             height: 70,
@@ -228,7 +237,10 @@ class _LoginState extends State<Login> {
                                 _authData['password'] = value;
                               },
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
                         ],
                       ),
                     ),
@@ -288,6 +300,9 @@ class _LoginState extends State<Login> {
                         controller: _adminKey,
                       ),
                     ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   if (_isLoading)
                     CircularProgressIndicator()
                   else

@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foster_me/screens/cms.dart';
 import 'package:foster_me/screens/menuFrame.dart';
 import 'package:foster_me/screens/menu_screen.dart';
+import 'package:foster_me/screens/profile_screen.dart';
 import '../models/authentication.dart';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
@@ -16,6 +17,7 @@ import '../widgets/petView.dart';
 import '../models/animals.dart';
 import 'package:provider/provider.dart';
 import '../models/authentication.dart';
+import 'petBreedFinder_screen.dart';
 
 Color firstColor = Color.fromRGBO(48, 96, 53, 1.0);
 Color secondColor = Color.fromRGBO(40, 123, 33, 1.0);
@@ -154,13 +156,47 @@ class _MenuScreenState extends State<MenuScreen> {
                               Icon(
                                 FontAwesomeIcons.paw,
                                 size: 17.0,
-                                color: Colors.white.withOpacity(0.5),
+                                color: Colors.white,
                               ),
                               SizedBox(
                                 width: 16.0,
                               ),
                               Text(
                                 "Our Pets",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(DetermineBreed.routeName);
+                          setState(() {
+                            selectedMenuIndex = 1;
+                            widget.menuCallback(1);
+                            // widget.menuCallback(index);
+                          });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24.0),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.question,
+                                size: 17.0,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
+                              SizedBox(
+                                width: 16.0,
+                              ),
+                              Text(
+                                "Breed Finder",
                                 style: TextStyle(
                                   color: Colors.white.withOpacity(0.5),
                                   fontSize: 17.0,
@@ -173,6 +209,8 @@ class _MenuScreenState extends State<MenuScreen> {
                       ),
                       InkWell(
                         onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(ProfileScreen.routeName);
                           setState(() {
                             selectedMenuIndex = 1;
                             widget.menuCallback(1);
@@ -205,7 +243,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       ),
                       isAdmin
                           ? Padding(
-                              padding: EdgeInsets.only(top: 5.0),
+                              padding: EdgeInsets.symmetric(vertical: 24.0),
                               child: Row(
                                 children: <Widget>[
                                   Icon(
@@ -218,10 +256,13 @@ class _MenuScreenState extends State<MenuScreen> {
                                   ),
                                   InkWell(
                                     onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(CMS.routeName);
                                       // openCMS(context);
                                       setState(() {
                                         selectedMenuIndex = 2;
                                         widget.menuCallback(2);
+
                                         // widget.menuCallback(index);
                                       });
                                     },

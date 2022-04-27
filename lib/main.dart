@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             primaryColor: Color.fromRGBO(27, 124, 16, 1),
             //Color.fromRGBO(255, 211, 211, 1),
           ),
-          home: authData.auth ? MenuFrame(authData.isAdmin) : Login(),
+          home: authData.auth ? MenuFrame() : Login(),
           routes: {
             // // '/': (ctx) => Main_Foster(),
             // '/': (ctx) => Login(),

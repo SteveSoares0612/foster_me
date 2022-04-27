@@ -65,46 +65,6 @@ class _DetermineBreedState extends State<DetermineBreed> {
     });
   }
 
-  Future<void> _optiondialogbox() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Theme.of(context).primaryColor,
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  GestureDetector(
-                    child: Text(
-                      "Camera",
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    ),
-                    onTap: openCamera,
-                  ),
-                  Padding(padding: EdgeInsets.all(10.0)),
-                  GestureDetector(
-                    child: Text(
-                      "Choose image ",
-                      style: TextStyle(color: Colors.white, fontSize: 20.0),
-                    ),
-                    onTap: openGallery,
-                  )
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  Future openCamera() async {
-    var image = await _picker.getImage(source: ImageSource.camera);
-
-    setState(() {
-      _chosenImage = image;
-    });
-    classifyImage(_chosenImage);
-  }
-
   //camera method
   Future openGallery() async {
     var image = await _picker.getImage(source: ImageSource.gallery);
@@ -118,7 +78,7 @@ class _DetermineBreedState extends State<DetermineBreed> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Image Classification'),
+        title: const Text('Smart Breed Finder'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: _loading
@@ -135,6 +95,22 @@ class _DetermineBreedState extends State<DetermineBreed> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Text(
+                        "The Smart Breed Finder allows you to find the breed of a dog if your unaware of it. Get right to it by picking an image of a Dog!",
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Note: This feature only works on dog breeds.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.grey, fontStyle: FontStyle.italic),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Column(
                         children: <Widget>[
                           Container(
@@ -152,18 +128,29 @@ class _DetermineBreedState extends State<DetermineBreed> {
                                 : Text(
                                     'No Image Found',
                                     textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.grey),
                                   ),
                             alignment: Alignment.center,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20.0),
                             child: ElevatedButton.icon(
-                              icon: Icon(Icons.camera),
-                              label: Text('Choose Picture'),
-                              style: ElevatedButton.styleFrom(
-                                primary: Theme.of(context).primaryColor,
+                              icon: Icon(
+                                Icons.camera,
+                                color: Theme.of(context).primaryColor,
                               ),
-                              onPressed: _optiondialogbox,
+                              label: Text(
+                                'Choose Picture',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.white,
+                                side: BorderSide(
+                                    width: 2,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                              onPressed: openGallery,
                             ),
                           ),
                         ],
@@ -191,8 +178,8 @@ class _DetermineBreedState extends State<DetermineBreed> {
                                       ),
                                     ],
                                   )
-                                : Text("NOT FOUND",
-                                    style: TextStyle(fontSize: 22)),
+                                : Text("Please pick and image",
+                                    style: TextStyle(fontSize: 19)),
                           ),
                           // Text("HELLO")
                         ],
